@@ -157,6 +157,48 @@
 			}
 		};
     </script>
+	<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const container = document.createElement("div");
+    container.id = "container";
+    container.style.width = "100%";
+    container.style.height = "100vh";
+    container.style.backgroundColor = "white";
+    container.style.position = "relative";
+    document.body.appendChild(container);
+
+    let circles = [];
+    let isAddingCircles = false;
+
+    function addCircle(event) {
+        if (isAddingCircles) return;
+
+        isAddingCircles = true;
+        event.preventDefault();
+        circles.forEach(circle => circle.remove());
+        circles = [];
+        const circleCount = event.touches.length;
+        for (let i = 0; i < circleCount; i++) {
+            const circle = document.createElement("div");
+            circle.classList.add("circle");
+            circle.style.width = "50px";
+            circle.style.height = "50px";
+            circle.style.borderRadius = "50%";
+            circle.style.backgroundColor = "blue";
+            circle.style.position = "absolute";
+            circle.style.left = event.touches[i].pageX + "px";
+            circle.style.top = event.touches[i].pageY + "px";
+            circles.push(circle);
+            container.appendChild(circle);
+        }
+        isAddingCircles = false;
+    }
+
+    container.addEventListener("touchstart", addCircle);
+    container.addEventListener("touchend", () => circles.forEach(circle => circle.remove()));
+});
+</script>
+
 </body> 
 
 <!-- Mirrored from dedragames.com/games/ovo/1.4.4/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 05 Feb 2022 16:30:44 GMT -->
